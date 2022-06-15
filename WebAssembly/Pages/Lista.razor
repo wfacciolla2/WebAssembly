@@ -1,0 +1,41 @@
+﻿@page "/lista"
+
+<PageTitle>Lista de atividades</PageTitle>
+
+<h1>Atividades: (@listas.Count(lista => !lista.IsDone))</h1>
+
+<ul>
+    @foreach (var lista in listas)
+    {
+        <li>
+            <input type="checkbox" @bind="lista.IsDone" />
+            Titulo: <input @bind="lista.Title" />
+            Descrição: <input @bind="lista.Description"/>
+        </li>
+    }
+</ul>
+
+<input type="text" placeholder="Adicionar nova tarefa" @bind="novaTarefa" />
+<div>    </div>
+<textarea placeholder="Adicionar uma descrição" @bind="novaDescricao" />
+<button @onclick="AddTarefa">Adicionar tarefa</button>
+
+@code {
+
+    private List<ListaItem> listas = new();
+    private string? novaTarefa;
+    private string? novaDescricao;
+
+    private void AddTarefa()
+    {
+        //adicionar tarefa
+        if (!string.IsNullOrWhiteSpace(novaTarefa))
+        {
+            listas.Add(new ListaItem { Title = novaTarefa, Description = novaDescricao });
+
+            novaTarefa = string.Empty;
+            novaDescricao = string.Empty;
+        }        
+    }
+}
+

@@ -1,0 +1,74 @@
+﻿@page "/formulario"
+@using Microsoft.Extensions.Logging
+@inject ILogger<Formulario> Logger
+
+<h1>Formulario para preenchimento</h1>
+<div> </div>
+<h2>Entre com as informações</h2>
+
+<EditForm Model="@starship" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <label>
+            Identificação:
+            <InputText @bind-Value="starship.Identifier" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Descrição (opcional):
+            <InputTextArea @bind-Value="starship.Description" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Tipo de classificação:
+            <InputSelect @bind-Value="starship.Classification">
+                <option value="">Selecione uma classificação ...</option>
+                <option value="Exploration">Exploration</option>
+                <option value="Diplomacy">Diplomacy</option>
+                <option value="Defense">Defense</option>
+            </InputSelect>
+        </label>
+    </p>
+    <p>
+        <label>
+            Acomodações máximas:
+            <InputNumber @bind-Value="starship.MaximumAccommodation" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Aprovador por engenheiros:
+            <InputCheckbox @bind-Value="starship.IsValidatedDesign" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Data:
+            <InputDate @bind-Value="starship.ProductionDate" />
+        </label>
+    </p>
+
+    <button type="submit">Enviar</button>
+
+    <p>
+         
+        &reg;2022 wfacciolla. 
+        <a href="https://www.facebook.com/wfacciolla">wFacciolla</a>
+    </p>
+</EditForm>
+
+@code {
+    private Starship starship = new() { ProductionDate = DateTime.UtcNow };
+
+    private void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+
+        // Process the valid form
+    }
+}
+
